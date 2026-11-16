@@ -222,7 +222,7 @@ Three rigorous statistical hypothesis tests were conducted at significance level
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/venkat1802901/apexplanet-data-analytics-internship.git
+git clone https://github.com/venkat-070/apexplanet-data-analytics-internship.git
 cd apexplanet-data-analytics-internship
 ```
 
