@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+.ipynb_checkpoints/
+.pytest_cache/
+.coverage
+htmlcov/
+mpl_cache/
+
+# Environments
+env/
+venv/
+ENV/
+.venv
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini

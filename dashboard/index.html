@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApexPlanet Data Analytics Dashboard | Venkata Vedhadri Marisetti</title>
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation & Header -->
+        <header class="dashboard-header">
+            <div class="brand-section">
+                <div class="brand-logo-badge">AP</div>
+                <div>
+                    <h1 class="header-title">Enterprise Omnichannel Analytics & BI Dashboard</h1>
+                    <div class="header-sub">
+                        <span><strong>ApexPlanet Software Pvt. Ltd.</strong> | Data Analytics Internship (2026)</span>
+                        <span class="badge cert-badge">ID: APSPL2650541</span>
+                    </div>
+                </div>
+            </div>
+            <div class="student-meta">
+                <div class="student-name">Venkata Vedhadri Marisetti</div>
+                <div class="student-roll">Reg: 23981A44Y9 | B.Tech CSE (Data Science)</div>
+                <div class="guide-info">Raghu Engineering College | Guide: Md Imam Khader Shariff</div>
+            </div>
+        </header>
+
+        <!-- Slicers & Interactive Filter Bar -->
+        <section class="filter-bar">
+            <div class="filter-item">
+                <label for="filter-region">Region</label>
+                <select id="filter-region" onchange="applyFilters()">
+                    <option value="ALL">All Regions</option>
+                    <option value="East">East</option>
+                    <option value="West">West</option>
+                    <option value="Central">Central</option>
+                    <option value="South">South</option>
+                    <option value="North">North</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="filter-category">Product Category</label>
+                <select id="filter-category" onchange="applyFilters()">
+                    <option value="ALL">All Categories</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Office Supplies">Office Supplies</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="filter-segment">Customer Segment</label>
+                <select id="filter-segment" onchange="applyFilters()">
+                    <option value="ALL">All Segments</option>
+                    <option value="Consumer">Consumer</option>
+                    <option value="Corporate">Corporate</option>
+                    <option value="Home Office">Home Office</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="filter-discount">Discount Tier</label>
+                <select id="filter-discount" onchange="applyFilters()">
+                    <option value="ALL">All Tiers</option>
+                    <option value="0% (None)">0% (None)</option>
+                    <option value="1% - 10% (Low)">1% - 10% (Low)</option>
+                    <option value="11% - 20% (Moderate)">11% - 20% (Moderate)</option>
+                    <option value="> 20% (Aggressive)">> 20% (Aggressive)</option>
+                </select>
+            </div>
+            <div class="filter-item btn-item">
+                <button class="reset-btn" onclick="resetFilters()">Reset Slicers</button>
+            </div>
+        </section>
+
+        <!-- Executive KPI Scorecard Cards -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-title">Total Gross Revenue</div>
+                <div class="kpi-value" id="kpi-revenue">$0</div>
+                <div class="kpi-trend positive">&#9650; Multi-Region Volume</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Net Operating Profit</div>
+                <div class="kpi-value" id="kpi-profit">$0</div>
+                <div class="kpi-trend positive">&#9650; Net Bottom Line</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Operating Margin %</div>
+                <div class="kpi-value" id="kpi-margin">0%</div>
+                <div class="kpi-trend positive">&#9679; Target &ge; 25%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Average Order Value (AOV)</div>
+                <div class="kpi-value" id="kpi-aov">$0</div>
+                <div class="kpi-trend neutral">&#8594; Per Transaction</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Total Orders Fulfilled</div>
+                <div class="kpi-value" id="kpi-orders">0</div>
+                <div class="kpi-trend neutral">&#10003; 100% Audited</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Active Customer Base</div>
+                <div class="kpi-value" id="kpi-customers">0</div>
+                <div class="kpi-trend positive">&#9733; High Repeat Rate</div>
+            </div>
+        </section>
+
+        <!-- Interactive Visual Analytics Grid -->
+        <section class="charts-grid">
+            <div class="chart-container large">
+                <div class="chart-header">
+                    <h3>Monthly Revenue Trajectory & Operating Profit Trend</h3>
+                    <span class="chart-tag">Time Series (2024 - 2026)</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="monthlyTrendChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Revenue by Category</h3>
+                    <span class="chart-tag">Contribution</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="categoryDonutChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Regional Sales & Profit Comparison</h3>
+                    <span class="chart-tag">Geographic Breakdown</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="regionalBarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>RFM Customer Segmentation</h3>
+                    <span class="chart-tag">Lifecycle Cohorts</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="rfmChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transaction Data Explorer Grid -->
+        <section class="table-section">
+            <div class="table-header">
+                <div class="table-title">
+                    <h3>Transaction Data Explorer</h3>
+                    <p>Live sample records from cleansed enterprise data lake</p>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="tableSearch" placeholder="Search customer, order, region, category..." onkeyup="filterTable()">
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="transactionsTable">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Customer Name</th>
+                            <th>Segment</th>
+                            <th>Region</th>
+                            <th>Category</th>
+                            <th>Sub-Category</th>
+                            <th>Sales ($)</th>
+                            <th>Discount</th>
+                            <th>Profit ($)</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Populated dynamically via app.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer / Academic Acknowledgement -->
+        <footer class="dashboard-footer">
+            <p><strong>ApexPlanet Software Pvt. Ltd.</strong> | Data Analytics Internship Project (Tasks 1–5 Complete)</p>
+            <p>Student: <strong>Venkata Vedhadri Marisetti</strong> (23981A44Y9) | Guide: <strong>Md Imam Khader Shariff</strong> | Raghu Engineering College (Autonomous)</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
